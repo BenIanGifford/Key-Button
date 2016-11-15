@@ -1,25 +1,25 @@
 from gpiozero import Button
+from threading import Thread
 
-def key_turned():
-    key_engged = True
-    print("Key engaged!")
+key = Button(4)
+btn = Button(17)
 
-def key_released():
-    key_engaged = False
+def function1():
+    while True:
+        btn.wait_for_press()
+        print("hello world, from btn")
+        btn.wait_for_release()
+        print("goodbye world from btn")
 
-def btn_pressed():
-    btn_down = True
-    print("Button down!")
-    
-def btn_released():
-    btn_down = False
-    
-key = Button(14)
-key_engaged = False
-btn = Button(28)
-btn_down = False
+def function2():
+    while True:
+        key.wait_for_press()
+        print("hello world from the key")
+        key.wait_for_release()
+        print("goodbye world from the key")
+        
+function1 = Thread(target=function1)
+function1.start()
 
-key.when_pressed = key_turned()
-key.when_released = key_released()
-btn.when_pressed = btn_pressed()
-btn.when_released = btn.released()
+function2 = Thread(target=function2)
+function2.start()
