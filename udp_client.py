@@ -3,7 +3,7 @@ import time
 
 UDP_IP = "127.0.0.1"
 UDP_PORT = 1234
-MESSAGES = ["start_horn", "stop_horn", "classic_destroy"]
+MESSAGES = ["start_horn", "classic_destroy", "stop_horn"]
 
 for message in MESSAGES:
 	print "UDP target IP:", UDP_IP
