@@ -4,7 +4,7 @@ import socket
 
 key = Button(4)
 btn = Button(17)
-UDP_IP = "127.0.0.1"
+UDP_IP = "192.168.3.56"
 UDP_PORT = 1234
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 
