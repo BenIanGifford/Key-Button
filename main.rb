@@ -1,5 +1,6 @@
 require 'socket'
 require 'pry'
+
 s = UDPSocket.new
 s.bind(nil, 1234)
 $klaxon_pid = nil
@@ -8,7 +9,7 @@ loop do
   text, sender = s.recvfrom(16)
   case text
   when "start_horn"
-    if $klaxon_pid
+    if ($klaxon_pid.to_i > 0) && !(Process.getpgid($klaxon_pid) rescue nil).nil?
       puts "still running horn"
     else
       puts "starting horn"
