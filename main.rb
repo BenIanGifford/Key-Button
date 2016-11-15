@@ -2,7 +2,7 @@ require 'socket'
 require 'pry'
 
 s = UDPSocket.new
-s.bind(nil, 1234)
+s.bind("192.168.193.69", 1234)
 $klaxon_pid = nil
 $explosion_pid = nil
 loop do
