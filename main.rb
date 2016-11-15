@@ -6,14 +6,14 @@ $pid = nil
 loop do
   text, sender = s.recvfrom(16)
   case text
-  when "play"
-    puts "playing horn"
+  when "start_horn"
     if $pid
-      puts "still playing horn"
+      puts "still running horn"
     else
+      puts "starting horn"
       $pid = fork{ exec 'mpg123', '--loop', '-1', './sound/klaxon.mp3' }
     end
-  when "stop"
+  when "stop_horn"
     if $pid
       puts "killing"
       Process.kill("HUP", $pid)
