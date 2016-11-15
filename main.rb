@@ -2,9 +2,14 @@ require 'socket'
 require 'pry'
 
 s = UDPSocket.new
-s.bind("192.168.193.69", 1234)
+s.bind(nil, 1234)
 $klaxon_pid = nil
 $explosion_pid = nil
+$explosion_paths = [
+  "./sound/button_push1.mp3","./sound/button_push2.mp3",
+  "./sound/button_push3.mp3", "./sound/button_push4.mp3",
+  "./sound/button_push5.mp3", "./sound/button_push6.mp3",
+]
 loop do
   text, sender = s.recvfrom(16)
   case text
@@ -13,7 +18,7 @@ loop do
       puts "still running horn"
     else
       puts "starting horn"
-      $klaxon_pid = fork{ exec 'mpg123', '--loop', '-1', './sound/klaxon.mp3' }
+      $klaxon_pid = fork{ exec 'mpg123', '--loop', '-1', './sound/rogue_one_2.mp3' }
     end
   when "stop_horn"
     if $klaxon_pid
@@ -25,12 +30,7 @@ loop do
       puts "horn not sounding"
     end
   when "classic_destroy"
-    puts "classic destroyed"
-    if $explosion_pid
-      puts "this shouldn't trigger"
-    else
-      puts "starting horn"
-      $explosion_pid = fork{ exec 'mpg123', '--loop', '3', './sound/rpg_shrapnel.mp3' }
-    end
+    puts "fire in the hole"
+    $explosion_pid = fork{ exec 'mpg123', '--loop', '3', $explosion_paths.sample }
   end
 end
